@@ -1,0 +1,73 @@
+//#region authentication
+
+.auth-bg {
+    //background-image: url(https://res.cloudinary.com/js-media/image/upload/v1651376971/Store-JS/background_vmydhe.jpg);
+    background-image: url(https://res.cloudinary.com/js-media/image/upload/v1651381064/Store-JS/background_g1gqk5.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    &.expire {
+        background-color: #1764e7 !important;
+    }
+
+    div.bk-transaparent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #3366ff6b;
+        height: 100vh;
+    }
+}
+
+@media (min-width: 900px) {
+    .auth-bg {
+        height: 100vh;
+        div.bk-transaparent {
+            height: 100vh;
+            margin-bottom: -25px;
+        }
+    }
+}
+
+//#endregion
+
+body,
+div#root {
+    height: 100vh;
+    background-color: #f0f2f8;
+}
+
+legend {
+    float: none;
+}
+
+hr {
+    color: azure;
+}
+
+.__dbk__container {
+    border-radius: 0.3rem;
+}
+
+.__dbk__gutter.Horizontal.Dark {
+    height: unset;
+    background-color: #efefef;
+    width: 4px;
+    .__dbk__dragger.Horizontal.Dark {
+        background-color: #dee2e6;
+    }
+}
+
+.swal2-container {
+    z-index: 1301 !important;
+}
+
+.react-viewer-mask {
+    z-index: 1300 !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.react-viewer-icon {
+    font-size: 11px !important;
+}

@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'opendyslexic';
+    // src: url('http://dyslexicfonts.com/fonts/OpenDyslexic-Regular.otf');
+    src: url('../../fonts/dyslexic/OpenDyslexic-Bold.otf');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'opendyslexic';
+    src: url('../../fonts/dyslexic/OpenDyslexic-Italic.ttf');
+    font-style: italic;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'opendyslexic';
+    src: url('../../fonts/dyslexic/OpenDyslexic-Bold.ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'opendyslexic';
+    src: url('../../fonts/dyslexic/OpenDyslexic-BoldItalic.ttf');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: eulexia;
+    src: url('../../fonts/dyslexic/eulexia.ttf');
+}
+
+body {
+    --background: rgb(249 250 251/1);
+    --text-primary: rgb(18, 28, 45);
+    --text-secondary: royalblue;
+    --accent: purple;
+
+    &.dark {
+        --background: rgba(34, 33, 33, 0.918);
+        --text-primary: white;
+        --text-secondary: grey;
+        --accent: darkred;
+    }
+    &.dyslexic {
+        font-size: 20px;
+        line-height: 200%;
+        color: #191a42;
+        font-family: opendyslexic !important;
+    }
+}
+
+@import 'alert';
+@import 'custom';
+@import 'slider';
+@import 'variables';
+@import 'input';
+@import 'material';
+
+#container {
+    visibility: hidden;
+}
+
+#loader {
+    color: #008cff;
+    height: 40px;
+    left: 45%;
+    position: absolute;
+    top: 45%;
+    width: 30%;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.shopping-list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+}
+
+#order-button.grid {
+    width: 100%;
+    display: grid;
+    gap: 0.3rem;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+}
+
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+  background:  #888;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

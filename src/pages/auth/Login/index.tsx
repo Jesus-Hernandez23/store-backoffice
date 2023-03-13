@@ -1,9 +1,7 @@
-import React from 'react';
-
 //control
 import { Link } from 'react-router-dom';
 import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 //mui
 import Box from '@mui/material/Box';
@@ -23,11 +21,10 @@ import EmailIcon from '@mui/icons-material/EmailOutlined';
 
 //owned
 import useLogin from './useLogin';
-import apiAuth from '@/api/tasks/ApiIdentity';
-import { Input, Password, CheckBox } from '@/common/control';
-import loginSchema, { ILoginValues } from '@/utils/validator/login';
-import { postApiIdentityAdminSignIn, postApiIdentityClientSignIn } from '@/api/v2/api';
-import { useMutation } from '@tanstack/react-query';
+import { Input, Password, CheckBox } from '@/shareds/control';
+import LoginSchema, { LoginSchemaType } from '@/utils/validator/login';
+import { usePostApiIdentityAdminSignIn } from '@/api/task/identity/identity';
+import { triggerError } from '@/utils/tools/message';
 
 const CustomizedCardHeader = styled(CardHeader)`
   flex-direction: row-reverse;
@@ -42,39 +39,21 @@ const CustomizedCardHeader = styled(CardHeader)`
 
 const Login = ({ isExpired = false }) => {
   //control form
-  const methods = useForm<ILoginValues>({
-    resolver: yupResolver(loginSchema),
+  const methods = useForm<LoginSchemaType>({
+    resolver: zodResolver(LoginSchema),
   });
 
-  const mutation = useMutation({
-    mutationFn: (data: ILoginValues) => {
-      return postApiIdentityAdminSignIn({
-        Email: data.email,
-        Password: data.password,
-      });
-    },
-  });
-
-  const { isLoading, mutate } = apiAuth.Authenticate();
   const { handleLogin } = useLogin();
+  const { isLoading, mutateAsync } = usePostApiIdentityAdminSignIn();
 
-  const enviarForm = (data: ILoginValues) => {
-    postApiIdentityAdminSignIn({
-      Email: data.email,
-      Password: data.password,
-    }).then((res) => {
-      console.log('🚀 ~ file: index.tsx ~ line 53 ~ postApiIdentityAdminSignIn ~ res', res);
-      //handleLogin(res);
-    });
-
-    /*mutate(
-      { ...data },
-      {
-        onSuccess: ({ data }) => {
-          handleLogin(data);
-        },
-      },
-    );*/
+  const enviarForm = async (data: LoginSchemaType) => {
+    try {
+      const result = await mutateAsync({ data });
+      console.log('🚀 ~ file: index.tsx:52 ~ enviarForm ~ result:', result);
+      handleLogin(result.data);
+    } catch (error: any) {
+      triggerError(error?.response?.data?.error?.message || 'Error al iniciar sesión');
+    }
   };
 
   return (
@@ -104,7 +83,7 @@ const Login = ({ isExpired = false }) => {
                 <Input
                   required
                   type='text'
-                  name='email'
+                  name='Email'
                   label='Correo electrónico'
                   startAdornment={<EmailIcon fontSize='small' color='secondary' />}
                 />
@@ -112,13 +91,13 @@ const Login = ({ isExpired = false }) => {
                 <Password
                   required
                   type='password'
-                  name='password'
+                  name='Password'
                   label='Contraseña'
                   startAdornment={<LockIcon fontSize='small' color='secondary' />}
                 />
 
                 <Box display='flex' alignItems='center' justifyContent='space-between'>
-                  <CheckBox name='remember' label='Recordarme' />
+                  <CheckBox name='Remember' label='Recordarme' />
                   <Typography
                     component={Link}
                     to='/auth/reset-password'

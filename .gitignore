@@ -20,6 +20,10 @@ package-lock.json
 .env.test.local
 .env.production.local
 
+# auto-generated api
+src/api/task/
+src/api/interfaces/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -4,12 +4,15 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import Routes from '@/Routes';
 import theme from '@/services/themes/themes';
+import axios from 'axios';
 
 //redux
-import { useSelector } from 'react-redux';
+import { useAppSelector } from './hooks/redux.hook';
+
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 const App = () => {
-  const setting = useSelector((state) => state.app.setting);
+  const setting = useAppSelector((state) => state.app.setting);
 
   useEffect(() => {
     if (setting.darkMode) {

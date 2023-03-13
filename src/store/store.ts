@@ -17,8 +17,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   app: appReducer,
-  discount: chatReducer,
   cart: cartReducer,
+  chat: chatReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

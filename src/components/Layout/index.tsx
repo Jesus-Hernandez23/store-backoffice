@@ -17,10 +17,10 @@ import { drawerWidth } from '@/services/constant';
 import Loader from '@/components/LoaderPage';
 
 //redux
-import { useSelector, useDispatch } from 'react-redux';
 import { setShowBar } from '@/store/features/appSlice';
 
 import useSocket from '@/services/hooks/useSocket';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
 
 const Chat = React.lazy(() => import('@/pages/admin/Chat'));
 const Ventas = React.lazy(() => import('@/pages/admin/Venta'));
@@ -50,8 +50,8 @@ const MainLayout = () => {
   const matchUpMd = useMediaQuery('(min-width:600px)');
 
   //redux
-  const dispatch = useDispatch();
-  const drawerOpen = useSelector((state) => state.app.setting.showBar);
+  const dispatch = useAppDispatch();
+  const drawerOpen = useAppSelector((state) => state.app.setting.showBar);
 
   const handleDrawerToggle = () => {
     dispatch(setShowBar(!drawerOpen));

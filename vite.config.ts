@@ -1,31 +1,25 @@
-import * as path from 'path';
-import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
-import { VitePWA } from 'vite-plugin-pwa';
-import tsconfigPaths from 'vite-tsconfig-paths';
-
-import manifest from './manifest.json';
+import react from '@vitejs/plugin-react-swc';
+import checker from 'vite-plugin-checker';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths({}),
-    VitePWA({
-      manifest,
-      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
-      // switch to "true" to enable sw on development
-      devOptions: {
-        enabled: false,
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html}', '**/*.{svg,png,jpg,gif}'],
-      },
-    }),
-  ],
+  plugins: [react(), checker({ typescript: false })],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': '/src',
+      '@components': '/src/components',
+      '@pages': '/src/pages',
+      '@utils': '/src/utils',
+      '@hooks': '/src/hooks',
+      '@styles': '/src/styles',
+      '@assets': '/src/assets',
+      '@api': '/src/api',
+      '@store': '/src/store',
+      '@router': '/src/router',
+      '@config': '/src/config',
+      '@types': '/src/types',
+      '@common': '/src/common',
     },
   },
 });

@@ -1,22 +1,19 @@
-import * as Yup from 'yup';
+import * as z from 'zod';
 
-export interface ILoginValues {
-  email: string;
-  password: string;
-  remember?: boolean | null;
-}
-
-const loginSchema: Yup.SchemaOf<ILoginValues> = Yup.object().shape({
-  email: Yup.string()
-    .required('El correo es requerido')
-    .min(6, 'El correo debe tener al menos 6 caracteres')
-    .max(50, 'El correo no debe exceder los 50 caracteres')
-    .email('El correo es invalido'),
-  password: Yup.string()
-    .required('La contraseña es requerida')
-    .min(6, 'La contraseña debe tener al menos 6 caracteres')
-    .max(40, 'La contraseña debe exceder los 20 caracteres'),
-  remember: Yup.bool().nullable(),
+const LoginSchema = z.object({
+  Email: z
+    .string()
+    .min(6, { message: 'El correo debe tener al menos 6 caracteres' })
+    .max(50, { message: 'El correo no debe exceder los 50 caracteres' })
+    .email({ message: 'El correo es invalido' })
+    .nonempty({ message: 'El correo es requerido' }),
+  Password: z
+    .string()
+    .min(6, { message: 'La contraseña debe tener al menos 6 caracteres' })
+    .max(40, { message: 'La contraseña debe exceder los 20 caracteres' })
+    .nonempty({ message: 'La contraseña es requerida' }),
+  Remember: z.boolean().optional().nullable(),
 });
 
-export default loginSchema;
+export type LoginSchemaType = z.infer<typeof LoginSchema>;
+export default LoginSchema;

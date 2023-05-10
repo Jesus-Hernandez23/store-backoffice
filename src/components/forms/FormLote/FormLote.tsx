@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 //control
-import { useForm } from 'react-hook-form';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { useForm } from 'react-hook-form'
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 //Mui
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import { apiLote, apiSupplier, apiProduct } from '../../../api/tasks';
-import { Input, Select, TextArea, CheckBox } from '@/shareds/control';
+import FormDialog from '@/shareds/FormDialog'
+import { apiLote, apiSupplier, apiProduct } from '@/api-deprecated/tasks'
+import { Input, Select, TextArea, CheckBox } from '@/shareds/control'
 
 // supplierId quantity  unitPrice  totalPrice  code  expireAt  note soldOut
 const validationSchema = Yup.object().shape({
@@ -41,68 +41,68 @@ const validationSchema = Yup.object().shape({
   expireAt: Yup.date().typeError('Ingrese una fecha validad'),
   note: Yup.string().notRequired(),
   soldOut: Yup.bool().notRequired(),
-});
+})
 
 const FormLote = NiceModal.create(({ data, request, title }) => {
   //modal handle
-  const modal = useModal();
+  const modal = useModal()
 
   //validator
   const methods = useForm({
     resolver: yupResolver(validationSchema),
-  });
-  const watchQuantity = methods.watch('quantity', '');
-  const watchUnitPrice = methods.watch('unitPrice', '');
-  methods.setValue('totalPrice', watchUnitPrice * watchQuantity);
+  })
+  const watchQuantity = methods.watch('quantity', '')
+  const watchUnitPrice = methods.watch('unitPrice', '')
+  methods.setValue('totalPrice', watchUnitPrice * watchQuantity)
 
   //Apis
-  const { mutate } = request;
+  const { mutate } = request
 
   //get available categories
-  const { data: products } = apiProduct.get(1, 100);
-  const { data: suppliers } = apiSupplier.get(1, 100);
+  const { data: products } = apiProduct.get(1, 100)
+  const { data: suppliers } = apiSupplier.get(1, 100)
 
-  const [options, setOptions] = useState([]);
-  const [optSuppliers, setOptSuppliers] = useState([]);
+  const [options, setOptions] = useState([])
+  const [optSuppliers, setOptSuppliers] = useState([])
 
   const mapOption = (data) => {
-    return data?.map(({ id, name }) => ({ label: name, value: id }));
-  };
+    return data?.map(({ id, name }) => ({ label: name, value: id }))
+  }
 
   const onSubmit = async (data) => {
     // const image = data.image ? await uploadImage(data.image) : null;
     const {
       supplierId: { value: supplierId },
       productId: { value: productId },
-    } = data;
+    } = data
 
-    const final = { ...data, productId, supplierId };
-    console.log('final', final);
+    const final = { ...data, productId, supplierId }
+    console.log('final', final)
 
     mutate(final, {
       onSuccess: () => {
-        methods.reset({});
-        modal.hide();
+        methods.reset({})
+        modal.hide()
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (suppliers?.data) {
       const options = suppliers?.data.map(({ id, firstName, lastName, business }) => ({
         value: id,
         label: `${firstName} ${lastName} - ${business}`,
-      }));
-      setOptSuppliers(options);
+      }))
+      setOptSuppliers(options)
     }
-  }, [suppliers]);
+  }, [suppliers])
 
   useEffect(() => {
     if (products?.data) {
-      const options = mapOption(products?.data);
-      setOptions(options);
+      const options = mapOption(products?.data)
+      setOptions(options)
     }
-  }, [products]);
+  }, [products])
 
   //reset inputs when data change
   useEffect(() => {
@@ -115,9 +115,9 @@ const FormLote = NiceModal.create(({ data, request, title }) => {
       expireAt: data?.expireAt || '',
       note: data?.note || '',
       soldOut: data?.soldOut || false,
-    };
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    methods.reset(defaultValues)
+  }, [data])
 
   return (
     <FormDialog
@@ -154,7 +154,7 @@ const FormLote = NiceModal.create(({ data, request, title }) => {
       </Grid>
       <CheckBox name='soldOut' label='Agotado' />
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormLote;
+export default FormLote

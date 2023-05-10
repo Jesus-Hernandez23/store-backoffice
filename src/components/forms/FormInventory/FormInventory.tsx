@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 //control
-import { useForm } from 'react-hook-form';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useForm } from 'react-hook-form'
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 //Mui
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import { Input, Select, TextArea, CheckBox } from '@/shareds/control';
-import { apiProduct, apiLote } from '../../../api/tasks';
+import FormDialog from '@/shareds/FormDialog'
+import { Input, Select, TextArea, CheckBox } from '@/shareds/control'
+import { apiProduct, apiLote } from '@/api-deprecated/tasks'
 
 // supplierId quantity  unitPrice  totalPrice  code  expireAt  note soldOut
 const validationSchema = Yup.object().shape({
@@ -39,7 +39,7 @@ const validationSchema = Yup.object().shape({
         .max(10, 'El codigo de lote no debe exceder los 10 caracteres'),*/
   note: Yup.string().notRequired(),
   soldOut: Yup.bool().notRequired(),
-});
+})
 
 const optionReason = [
   {
@@ -59,47 +59,47 @@ const optionReason = [
     label: 'Devuelto',
     value: 3,
   },
-];
+]
 
 const mapOption = (data) => {
-  return data?.map(({ id, name }) => ({ label: name, value: id }));
-};
+  return data?.map(({ id, name }) => ({ label: name, value: id }))
+}
 
 const FormInventario = NiceModal.create(({ data, request, title }) => {
   //modal handle
-  const modal = useModal();
-  const [options, setOptions] = useState([]);
-  const [optLotes, setOptLotes] = useState([]);
-  const { data: products } = apiProduct.get(1, 100);
-  const { data: lotes } = apiLote.get(1, 100);
+  const modal = useModal()
+  const [options, setOptions] = useState([])
+  const [optLotes, setOptLotes] = useState([])
+  const { data: products } = apiProduct.get(1, 100)
+  const { data: lotes } = apiLote.get(1, 100)
 
   //validator
   const methods = useForm({
     shouldUnregister: true,
     resolver: yupResolver(validationSchema),
-  });
-  const watchQuantity = methods.watch('quantity', '');
-  const watchUnitPrice = methods.watch('unitPrice', '');
-  methods.setValue('total', watchUnitPrice * watchQuantity);
-  methods.setValue('subTotal', watchUnitPrice * watchQuantity);
+  })
+  const watchQuantity = methods.watch('quantity', '')
+  const watchUnitPrice = methods.watch('unitPrice', '')
+  methods.setValue('total', watchUnitPrice * watchQuantity)
+  methods.setValue('subTotal', watchUnitPrice * watchQuantity)
 
   //Apis
-  const { mutate } = request;
+  const { mutate } = request
 
   useEffect(() => {
     if (products?.data) {
-      const { data } = products;
-      setOptions(mapOption(data));
+      const { data } = products
+      setOptions(mapOption(data))
     }
-  }, [products]);
+  }, [products])
 
   useEffect(() => {
     if (lotes?.data) {
-      const { data } = lotes;
-      const aux = data?.map(({ id, product, code }) => ({ label: `${product} - ${code}`, value: id }));
-      setOptLotes(aux);
+      const { data } = lotes
+      const aux = data?.map(({ id, product, code }) => ({ label: `${product} - ${code}`, value: id }))
+      setOptLotes(aux)
     }
-  }, [lotes]);
+  }, [lotes])
 
   useEffect(() => {
     const defaultValues = {
@@ -109,24 +109,24 @@ const FormInventario = NiceModal.create(({ data, request, title }) => {
       subTotal: data?.subTotal || '',
       total: data?.total || '',
       note: data?.note || '',
-    };
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    methods.reset(defaultValues)
+  }, [data])
 
   const onSubmit = (data) => {
-    const loteId = data.loteId.value;
-    const reason = parseInt(data.reason.value);
-    console.log({ ...data, reason, loteId });
+    const loteId = data.loteId.value
+    const reason = parseInt(data.reason.value)
+    console.log({ ...data, reason, loteId })
     mutate(
       { ...data, reason, loteId },
       {
         onSuccess: () => {
-          methods.reset({});
-          modal.hide();
+          methods.reset({})
+          modal.hide()
         },
       },
-    );
-  };
+    )
+  }
 
   return (
     <FormDialog
@@ -168,7 +168,7 @@ const FormInventario = NiceModal.create(({ data, request, title }) => {
         </Grid>
       </Grid>
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormInventario;
+export default FormInventario

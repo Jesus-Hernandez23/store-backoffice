@@ -1,24 +1,24 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 //controls
-import { Button } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 
 //Icons
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import UserIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import UserIcon from '@mui/icons-material/Person'
 
 //Owned
-import PageCard from '@/shareds/PageCard';
-import Form from '@/components/forms/FormUser/FormUser';
-import { apiUser } from '../../../api/tasks/index';
-import usePagination from '@/services/hooks/usePagination';
-import useCrud from '@/services/hooks/useCrud';
-import Toolbar from '@/components/Toolbar';
-import ClientTemplate from './ClientTemplate';
+import PageCard from '@/shareds/PageCard'
+import Form from '@/components/forms/FormUser/FormUser'
+import { apiUser } from '@/api-deprecated/tasks/index'
+import usePagination from '@/services/hooks/usePagination'
+import useCrud from '@/services/hooks/useCrud'
+import Toolbar from '@/components/Toolbar'
+import ClientTemplate from './ClientTemplate'
 
 const columns = [
   {
@@ -34,14 +34,14 @@ const columns = [
   { field: 'phoneNumber', headerName: 'Telefono', width: 100 },
   //{ field: 'email', headerName: 'Correo', width: 200 },
   { field: 'id', headerName: 'Codigo', width: 200 },
-];
+]
 
 const User = () => {
-  const { t } = useTranslation();
-  const { control, selected, isLoading, isError } = usePagination(apiUser, columns);
-  const { handleAdd, handleEdit, handleDelete } = useCrud(apiUser, Form, selected);
+  const { t } = useTranslation()
+  const { control, selected, isLoading, isError } = usePagination(apiUser, columns)
+  const { handleAdd, handleEdit, handleDelete } = useCrud(apiUser, Form, selected)
 
-  const handleChooser = () => {};
+  const handleChooser = () => {}
 
   return (
     <PageCard
@@ -77,7 +77,7 @@ const User = () => {
 
       <DataGrid {...control} rowHeight={70} />
     </PageCard>
-  );
-};
+  )
+}
 
-export default User;
+export default User

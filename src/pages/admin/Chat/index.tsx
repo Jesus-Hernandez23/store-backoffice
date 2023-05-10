@@ -1,49 +1,49 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react'
 
-import Splitter from '@devbookhq/splitter';
-import { useAuthUser } from 'react-auth-kit';
+import Splitter from '@devbookhq/splitter'
+import { useAuthUser } from 'react-auth-kit'
 
-import Chat from '@/shareds/Chat';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
+import Chat from '@/shareds/Chat'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import Divider from '@mui/material/Divider'
 
-import List from '@mui/material/List';
+import List from '@mui/material/List'
 
-import ListItem from '@mui/material/ListItemButton ';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
+import ListItem from '@mui/material/ListItemButton '
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import ImageIcon from '@mui/icons-material/Image'
 
 //icons
-import SupportAgentIcon from '@mui/icons-material/SupportAgentTwoTone';
+import SupportAgentIcon from '@mui/icons-material/SupportAgentTwoTone'
 
 //redux
-import { setRoom } from '@/store/features/chatSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import { setRoom } from '@/redux/features/chatSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
 interface ChatPageProps {
-  chatSocket: any;
+  chatSocket: any
 }
 
 const ChatPage: FC<ChatPageProps> = ({ chatSocket }) => {
-  const auth = useAuthUser()();
-  const dispatch = useAppDispatch();
+  const auth = useAuthUser()()
+  const dispatch = useAppDispatch()
 
-  const rooms = useAppSelector((state) => state.chat.rooms);
-  const currentRoom = useAppSelector((state) => state.chat.currentRoom);
-  const messages = useAppSelector((state) => state.chat.messages[currentRoom]);
+  const rooms = useAppSelector((state) => state.chat.rooms)
+  const currentRoom = useAppSelector((state) => state.chat.currentRoom)
+  const messages = useAppSelector((state) => state.chat.messages[currentRoom])
 
-  console.log('messages', messages);
+  console.log('messages', messages)
 
   const handleRoom = (value) => {
     if (chatSocket._connectionStarted) {
-      chatSocket.invoke('AddToGroup', value, auth.username);
-      dispatch(setRoom(value));
+      chatSocket.invoke('AddToGroup', value, auth.username)
+      dispatch(setRoom(value))
     }
-  };
+  }
 
   return (
     <Card>
@@ -62,8 +62,8 @@ const ChatPage: FC<ChatPageProps> = ({ chatSocket }) => {
         </Splitter>
       </Box>
     </Card>
-  );
-};
+  )
+}
 
 function ChatRoom({ rooms, setRoom, room }) {
   return (
@@ -86,7 +86,7 @@ function ChatRoom({ rooms, setRoom, room }) {
         </React.Fragment>
       ))}
     </List>
-  );
+  )
 }
 
-export default ChatPage;
+export default ChatPage

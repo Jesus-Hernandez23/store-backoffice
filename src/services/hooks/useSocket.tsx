@@ -1,60 +1,60 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query'
 
-import { useAuthUser } from 'react-auth-kit';
-import { HubConnectionBuilder } from '@microsoft/signalr';
+import { useAuthUser } from 'react-auth-kit'
+import { HubConnectionBuilder } from '@microsoft/signalr'
 
 //redux
 //import { Store } from 'react-notifications-component'
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
-import { addRooms, addMessage, setRoom } from '@/store/features/chatSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
+import { addRooms, addMessage, setRoom } from '@/redux/features/chatSlice'
 
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = import.meta.env.VITE_API_URL
 
 const useSocket = () => {
-  const auth = useAuthUser()();
-  const queryClient = useQueryClient();
-  const [chatSocket, setChatSocket] = useState(null);
-  const [dashSocket, setDashSocket] = useState(null);
+  const auth = useAuthUser()()
+  const queryClient = useQueryClient()
+  const [chatSocket, setChatSocket] = useState(null)
+  const [dashSocket, setDashSocket] = useState(null)
 
   //redux
-  const dispatch = useAppDispatch();
-  const currentRoom = useAppSelector((state) => state.chat.currentRoom);
+  const dispatch = useAppDispatch()
+  const currentRoom = useAppSelector((state) => state.chat.currentRoom)
 
   useEffect(() => {
     const chatConnection = new HubConnectionBuilder()
       .withUrl(baseURL + '/hubs/chat')
       .withAutomaticReconnect()
-      .build();
+      .build()
 
     chatConnection
       .start()
       .then(() => setDashSocket(dashConnection))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err))
 
     const dashConnection = new HubConnectionBuilder()
       .withUrl(baseURL + '/hubs/dash')
       .withAutomaticReconnect()
-      .build();
+      .build()
 
     dashConnection
       .start()
       .then(() => setChatSocket(chatConnection))
-      .catch((err) => console.error(err));
-  }, []);
+      .catch((err) => console.error(err))
+  }, [])
 
   useEffect(() => {
     if (chatSocket?._connectionStarted) {
-      chatSocket.invoke('NewGroup', auth.username);
+      chatSocket.invoke('NewGroup', auth.username)
 
       //set user room as default
-      dispatch(setRoom(auth.username));
-      chatSocket.invoke('AddToGroup', auth.username, auth.username);
+      dispatch(setRoom(auth.username))
+      chatSocket.invoke('AddToGroup', auth.username, auth.username)
 
       chatSocket.on('AvailableGroups', (rooms) => {
-        dispatch(addRooms(rooms));
-      });
+        dispatch(addRooms(rooms))
+      })
 
       chatSocket.on('ShowWho', (message) => {
         /*Store.addNotification({
@@ -67,20 +67,20 @@ const useSocket = () => {
                         duration: 2000,
                     },
                 })*/
-      });
+      })
 
       chatSocket.on('ReceiveMessage', (message) => {
-        dispatch(addMessage({ room: message.room, message }));
-      });
+        dispatch(addMessage({ room: message.room, message }))
+      })
     }
-  }, [chatSocket]);
+  }, [chatSocket])
 
   useEffect(() => {
     if (dashSocket?._connectionStarted) {
-      dashSocket.invoke('GetExchangeRate');
+      dashSocket.invoke('GetExchangeRate')
 
       dashSocket.on('ReceiveRate', (data) => {
-        console.log('ReceiveRate', data);
+        console.log('ReceiveRate', data)
         /*Store.addNotification({
                     title: 'Actualización',
                     message: 'Un dolar equivale a: ' + data,
@@ -92,13 +92,13 @@ const useSocket = () => {
                         duration: 2000,
                     },
                 })*/
-      });
+      })
 
       dashSocket.on('InvalidateData', (data) => {
-        queryClient.invalidateQueries(data);
-      });
+        queryClient.invalidateQueries(data)
+      })
     }
-  }, [dashSocket]);
+  }, [dashSocket])
 
   /*useEffect(() => {
         if (currentRoom !== '' && chatSocket) {
@@ -108,7 +108,7 @@ const useSocket = () => {
         }
     }, [currentRoom, chatSocket]);*/
 
-  return { chatSocket, dashSocket };
-};
+  return { chatSocket, dashSocket }
+}
 
-export default useSocket;
+export default useSocket

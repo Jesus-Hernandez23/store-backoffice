@@ -1,27 +1,27 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 //controls
-import { Button } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 
 //Icons
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWalletTwoTone';
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWalletTwoTone'
 
 //Owned
-import PageCard from '@/shareds/PageCard';
-import api from '@/api/tasks/ApiAccountant';
-import DropButton, { MenuItem } from '@/components/DropButton';
-import Form from '@/components/forms/FormAccountant/FormAccountant';
-import usePagination from '@/services/hooks/usePagination';
-import useCrud from '@/services/hooks/useCrud';
-import Toolbar from '@/components/Toolbar';
+import PageCard from '@/shareds/PageCard'
+import api from '@/api-deprecated/tasks/ApiAccountant'
+import DropButton, { MenuItem } from '@/components/DropButton'
+import Form from '@/components/forms/FormAccountant/FormAccountant'
+import usePagination from '@/services/hooks/usePagination'
+import useCrud from '@/services/hooks/useCrud'
+import Toolbar from '@/components/Toolbar'
 
-const URL = import.meta.env.VITE_API_REPORT_URL;
+const URL = import.meta.env.VITE_API_REPORT_URL
 
 const columns = [
   { field: 'id', headerName: 'Codigo', width: 100 },
@@ -42,16 +42,16 @@ const columns = [
     width: 140,
     valueGetter: ({ value }) => value && new Date(value),
   },
-];
+]
 const params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=0,height=0,left=-1000,top=-1000`;
+width=0,height=0,left=-1000,top=-1000`
 
 const index = () => {
-  const { t } = useTranslation();
-  const { control, data, selected, isLoading, isError } = usePagination(api, columns);
-  const { handleAdd, handleEdit, handleDelete } = useCrud(api, Form, selected);
+  const { t } = useTranslation()
+  const { control, data, selected, isLoading, isError } = usePagination(api, columns)
+  const { handleAdd, handleEdit, handleDelete } = useCrud(api, Form, selected)
 
-  const handleChooser = () => {};
+  const handleChooser = () => {}
   const onClickExpiring = () =>
     window
       .open(
@@ -59,7 +59,7 @@ const index = () => {
         'test',
         params,
       )
-      .focus();
+      .focus()
 
   return (
     <PageCard
@@ -89,7 +89,7 @@ const index = () => {
 
       <DataGrid {...control} />
     </PageCard>
-  );
-};
+  )
+}
 
-export default index;
+export default index

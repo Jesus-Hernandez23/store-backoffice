@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 //control
-import JoditEditor from 'jodit-react';
-import { useForm } from 'react-hook-form';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import JoditEditor from 'jodit-react'
+import { useForm } from 'react-hook-form'
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 //Mui
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import apiCategoria from '@/api/tasks/ApiCategory';
-import apiBrand from '@/api/tasks/ApiBrand';
-import { Input, Select, Uploader, RichText, TextArea, CheckBox } from '@/shareds/control';
+import FormDialog from '@/shareds/FormDialog'
+import apiCategoria from '@/api-deprecated/tasks/ApiCategory'
+import apiBrand from '@/api-deprecated/tasks/ApiBrand'
+import { Input, Select, Uploader, RichText, TextArea, CheckBox } from '@/shareds/control'
 
 //descripcion categoriaId precioventa cantidad marca stockMinimo codigoqr
 const validationSchema = Yup.object().shape({
@@ -52,73 +52,73 @@ const validationSchema = Yup.object().shape({
     .required('El stock minimo es requerido')
     .positive('El stock minimo debe ser positivo'),
   isInventoriable: Yup.bool(),
-});
+})
 
 const mapOption = (data) => {
-  return data?.map(({ id, name }) => ({ label: name, value: id }));
-};
+  return data?.map(({ id, name }) => ({ label: name, value: id }))
+}
 
 const FormProducto = NiceModal.create(({ data, request, title }) => {
   //modal handle
-  const modal = useModal();
+  const modal = useModal()
 
   //validator
   const methods = useForm({
     resolver: yupResolver(validationSchema),
-  });
+  })
 
-  const txtName = methods.watch('name', '');
+  const txtName = methods.watch('name', '')
   methods.setValue(
     'slug',
     txtName
       ?.toLowerCase()
       ?.replace(/ /g, '-')
       ?.replace(/[^\w-]+/g, ''),
-  );
+  )
 
   //Apis
-  const { mutate } = request;
+  const { mutate } = request
 
   //get available categories
-  const [content, setContent] = useState('');
-  const { data: dataBrand } = apiBrand.get(1, 10);
-  const { data: dataCatg } = apiCategoria.get(1, 10);
-  const [categories, setCategories] = useState([]);
-  const [sourceImg, setSourceImg] = useState('');
-  const [brands, setBrands] = useState([]);
+  const [content, setContent] = useState('')
+  const { data: dataBrand } = apiBrand.get(1, 10)
+  const { data: dataCatg } = apiCategoria.get(1, 10)
+  const [categories, setCategories] = useState([])
+  const [sourceImg, setSourceImg] = useState('')
+  const [brands, setBrands] = useState([])
 
   const onSubmit = async (data) => {
     // const image = data.image ? await uploadImage(data.image) : null;
     const {
       brandId: { value: brandId },
       categoryId: { value: categoryId },
-    } = data;
+    } = data
 
-    const final = { ...data, brandId, categoryId };
-    console.log('final', final);
+    const final = { ...data, brandId, categoryId }
+    console.log('final', final)
 
     mutate(final, {
       onSuccess: () => {
-        methods.reset({});
-        modal.hide();
+        methods.reset({})
+        modal.hide()
       },
-    });
-  };
+    })
+  }
 
   //parse data from api to be admited for select control
   useEffect(() => {
     if (dataCatg?.data) {
-      const { data } = dataCatg;
-      setCategories(mapOption(data));
+      const { data } = dataCatg
+      setCategories(mapOption(data))
     }
-  }, [dataCatg]);
+  }, [dataCatg])
 
   useEffect(() => {
     if (dataBrand?.data) {
-      const { data } = dataBrand;
-      setBrands(mapOption(data));
+      const { data } = dataBrand
+      setBrands(mapOption(data))
     }
-  }, [dataBrand]);
+  }, [dataBrand])
 
   //reset inputs when data change
   useEffect(() => {
@@ -134,10 +134,10 @@ const FormProducto = NiceModal.create(({ data, request, title }) => {
       stock: data?.stock,
       safetyStock: data?.safetyStock || '',
       id: data?.id || '',
-    };
-    setSourceImg(data?.image || '');
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    setSourceImg(data?.image || '')
+    methods.reset(defaultValues)
+  }, [data])
 
   return (
     <FormDialog title={`${title} producto`} methods={methods} callback={methods.handleSubmit(onSubmit)} modal={modal}>
@@ -198,7 +198,7 @@ const FormProducto = NiceModal.create(({ data, request, title }) => {
         </Grid>
       </Grid>
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormProducto;
+export default FormProducto

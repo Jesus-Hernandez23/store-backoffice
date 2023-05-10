@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 //control
-import { useForm } from 'react-hook-form';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form'
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import Stack from '@mui/material/Stack'
 
 //muiIcon
-import CategoryIcon from '@mui/icons-material/Category';
+import CategoryIcon from '@mui/icons-material/Category'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import { Input, CheckBox, TextArea, Select } from '@/shareds/control';
-import { apiCategory } from '../../../api/tasks';
+import FormDialog from '@/shareds/FormDialog'
+import { Input, CheckBox, TextArea, Select } from '@/shareds/control'
+import { apiCategory } from '@/api-deprecated/tasks'
 
 //nombre imagen icono descripcion porDefecto
 const validationSchema = Yup.object().shape({
@@ -30,46 +30,46 @@ const validationSchema = Yup.object().shape({
     .min(3, 'El slug debe tener al menos 3 caracteres')
     .max(60, 'El slug no debe exceder los 50 caracteres'),
   // id: Yup.number('Id debe ser de tipo entero').notRequired(),
-});
+})
 
 const FormCategory = NiceModal.create(({ data, request: { mutate }, title }) => {
   //modal handle
-  const modal = useModal();
-  const [options, setOptions] = useState([]);
-  const { data: categories, loading } = apiCategory.get(1, 100);
+  const modal = useModal()
+  const [options, setOptions] = useState([])
+  const { data: categories, loading } = apiCategory.get(1, 100)
 
   //validator
   const methods = useForm({
     shouldUnregister: true,
     resolver: yupResolver(validationSchema),
-  });
-  const txtName = methods.watch('name', '');
+  })
+  const txtName = methods.watch('name', '')
   methods.setValue(
     'slug',
     txtName
       ?.toLowerCase()
       ?.replace(/ /g, '-')
       ?.replace(/[^\w-]+/g, ''),
-  );
+  )
 
   const onSubmit = (data) => {
     mutate(data, {
       onSuccess: () => {
-        methods.reset({});
-        modal.hide();
+        methods.reset({})
+        modal.hide()
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (categories?.data) {
       const options = categories?.data.map(({ id, name }) => ({
         value: id,
         label: name,
-      }));
-      setOptions(options);
+      }))
+      setOptions(options)
     }
-  }, [categories]);
+  }, [categories])
 
   useEffect(() => {
     const defaultValues = {
@@ -77,9 +77,9 @@ const FormCategory = NiceModal.create(({ data, request: { mutate }, title }) => 
       name: data?.name || '',
       slug: data?.slug || '',
       description: data?.description || '',
-    };
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    methods.reset(defaultValues)
+  }, [data])
 
   return (
     <FormDialog
@@ -119,7 +119,7 @@ const FormCategory = NiceModal.create(({ data, request: { mutate }, title }) => 
       <CheckBox label='Seleccionar por defecto' name='byDefault' />
       <Input label='Codigo' name='id' placeholder='*Se autogenera' type='hidden' disabled />
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormCategory;
+export default FormCategory

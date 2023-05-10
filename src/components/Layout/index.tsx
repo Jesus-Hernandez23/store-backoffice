@@ -1,65 +1,65 @@
-import React, { useRef } from 'react';
+import React, { useRef } from 'react'
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom'
 
-import RequireRole from '@/services/auth/RequireRole';
-import { ROLES } from '@/services/auth/permission-maps';
+import RequireRole from '@/services/auth/RequireRole'
+import { ROLES } from '@/services/auth/permission-maps'
 
-import Box from '@mui/material/Box';
-import Slide from '@mui/material/Slide';
-import { useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box'
+import Slide from '@mui/material/Slide'
+import { useMediaQuery } from '@mui/material'
 
-import Header from '@/components/Layout/Header';
-import Sidebar from './Sidebar';
-import { drawerWidth } from '@/services/constant';
+import Header from '@/components/Layout/Header'
+import Sidebar from './Sidebar'
+import { drawerWidth } from '@/services/constant'
 
 //page
-import Loader from '@/components/LoaderPage';
+import Loader from '@/components/LoaderPage'
 
 //redux
-import { setShowBar } from '@/store/features/appSlice';
+import { setShowBar } from '@/redux/features/appSlice'
 
-import useSocket from '@/services/hooks/useSocket';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import useSocket from '@/services/hooks/useSocket'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
-const Chat = React.lazy(() => import('@/pages/admin/Chat'));
-const Ventas = React.lazy(() => import('@/pages/admin/Venta'));
-const Accountant = React.lazy(() => import('@/pages/admin/Accountant'));
-const Session = React.lazy(() => import('@/pages/admin/Session'));
-const Accessibility = React.lazy(() => import('@/pages/admin/Accessibility'));
-const DetalleVenta = React.lazy(() => import('@/pages/admin/Venta/Detalle'));
-const VentaNueva = React.lazy(() => import('@/pages/admin/Venta/Nueva'));
-const Inventory = React.lazy(() => import('@/pages/admin/Inventory'));
-const Lote = React.lazy(() => import('@/pages/admin/Lote'));
-const Supplier = React.lazy(() => import('@/pages/admin/Supplier'));
-const Dashboard = React.lazy(() => import('@/pages/admin/Dashboard'));
-const Employee = React.lazy(() => import('@/pages/admin/Employee'));
-const Product = React.lazy(() => import('@/pages/admin/Product'));
-const Category = React.lazy(() => import('@/pages/admin/Category'));
-const Brand = React.lazy(() => import('@/pages/admin/Brand'));
-const Client = React.lazy(() => import('@/pages/admin/Client'));
-const Guide = React.lazy(() => import('@/pages/admin/Guide'));
-const Reporte = React.lazy(() => import('@/pages/admin/Report'));
-const ReportViewer = React.lazy(() => import('@/pages/admin/Report/ReportViewer'));
-const Setting = React.lazy(() => import('@/pages/admin/Setting'));
-const NoFound = React.lazy(() => import('@/pages/error/NoFound'));
+const Chat = React.lazy(() => import('@/pages/admin/Chat'))
+const Ventas = React.lazy(() => import('@/pages/admin/Venta'))
+const Accountant = React.lazy(() => import('@/pages/admin/Accountant'))
+const Session = React.lazy(() => import('@/pages/admin/Session'))
+const Accessibility = React.lazy(() => import('@/pages/admin/Accessibility'))
+const DetalleVenta = React.lazy(() => import('@/pages/admin/Venta/Detalle'))
+const VentaNueva = React.lazy(() => import('@/pages/admin/Venta/Nueva'))
+const Inventory = React.lazy(() => import('@/pages/admin/Inventory'))
+const Lote = React.lazy(() => import('@/pages/admin/Lote'))
+const Supplier = React.lazy(() => import('@/pages/admin/Supplier'))
+const Dashboard = React.lazy(() => import('@/pages/admin/Dashboard'))
+const Employee = React.lazy(() => import('@/pages/admin/Employee'))
+const Product = React.lazy(() => import('@/pages/admin/Product'))
+const Category = React.lazy(() => import('@/pages/admin/Category'))
+const Brand = React.lazy(() => import('@/pages/admin/Brand'))
+const Client = React.lazy(() => import('@/pages/admin/Client'))
+const Guide = React.lazy(() => import('@/pages/admin/Guide'))
+const Reporte = React.lazy(() => import('@/pages/admin/Report'))
+const ReportViewer = React.lazy(() => import('@/pages/admin/Report/ReportViewer'))
+const Setting = React.lazy(() => import('@/pages/admin/Setting'))
+const NoFound = React.lazy(() => import('@/pages/error/NoFound'))
 
 const MainLayout = () => {
-  const containerRef = React.useRef(null);
-  const { chatSocket, dashSocket } = useSocket();
-  const matchUpMd = useMediaQuery('(min-width:600px)');
+  const containerRef = React.useRef(null)
+  const { chatSocket, dashSocket } = useSocket()
+  const matchUpMd = useMediaQuery('(min-width:600px)')
 
   //redux
-  const dispatch = useAppDispatch();
-  const drawerOpen = useAppSelector((state) => state.app.setting.showBar);
+  const dispatch = useAppDispatch()
+  const drawerOpen = useAppSelector((state) => state.app.setting.showBar)
 
   const handleDrawerToggle = () => {
-    dispatch(setShowBar(!drawerOpen));
-  };
+    dispatch(setShowBar(!drawerOpen))
+  }
 
   React.useEffect(() => {
-    dispatch(setShowBar(matchUpMd));
-  }, [matchUpMd]);
+    dispatch(setShowBar(matchUpMd))
+  }, [matchUpMd])
 
   return (
     <Box display='flex' sx={{ backgroundColor: 'background.default' }} ref={containerRef}>
@@ -229,7 +229,7 @@ const MainLayout = () => {
         </Slide>
       </Box>
     </Box>
-  );
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

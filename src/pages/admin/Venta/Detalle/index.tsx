@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 //Controls
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
+import { DataGrid } from '@mui/x-data-grid'
 
 //Icon
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import CalendarTodayIcon from '@mui/icons-material/CalendarTodayTwoTone';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined';
-import AccountWalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity'
+import CalendarTodayIcon from '@mui/icons-material/CalendarTodayTwoTone'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCartOutlined'
+import AccountWalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
 
 //own
-import Article from './Article';
-import PageCard from '@/shareds/PageCard';
-import NoData from '@/pages/error/NoData';
-import api from '@/api/tasks/ApiOrder';
+import Article from './Article'
+import PageCard from '@/shareds/PageCard'
+import NoData from '@/pages/error/NoData'
+import api from '@/api-deprecated/tasks/ApiOrder'
 
 const calculateTotal = ({ row }) => {
-  const { price, quantity, discount } = row || 0;
-  return (price * quantity - discount * quantity).toFixed(2);
-};
+  const { price, quantity, discount } = row || 0
+  return (price * quantity - discount * quantity).toFixed(2)
+}
 
 const columns = [
   { field: 'id', headerName: 'Id', width: 100 },
@@ -34,21 +34,21 @@ const columns = [
   { field: 'price', headerName: 'Precio', width: 100 },
   { field: 'discount', headerName: 'Descuento', width: 100 },
   { valueGetter: calculateTotal, headerName: 'Total', width: 100 },
-];
+]
 
 const Details = () => {
   //get data from api
-  const orderId = useParams().invoiceId;
-  const { mutate } = api.editNote(orderId);
-  const { data: order } = api.getById(orderId);
-  const { data: details } = api.getDetails(orderId);
-  const reportURL = import.meta.env.VITE_API_URL + '/api/Reporte/order?Id=' + orderId;
+  const orderId = useParams().invoiceId
+  const { mutate } = api.editNote(orderId)
+  const { data: order } = api.getById(orderId)
+  const { data: details } = api.getDetails(orderId)
+  const reportURL = import.meta.env.VITE_API_URL + '/api/Reporte/order?Id=' + orderId
 
-  console.log('details', details);
+  console.log('details', details)
 
-  const [note, setNote] = useState(order?.note || '');
+  const [note, setNote] = useState(order?.note || '')
 
-  const handleNote = () => mutate({ note });
+  const handleNote = () => mutate({ note })
 
   return (
     <PageCard
@@ -97,7 +97,7 @@ const Details = () => {
                 id='notas'
                 value={note}
                 onChange={(event) => {
-                  setNote(event.target.value);
+                  setNote(event.target.value)
                 }}
                 aria-label='empty textarea'
                 placeholder='Escribe alguna nota'
@@ -111,7 +111,7 @@ const Details = () => {
         </Grid>
       </Grid>
     </PageCard>
-  );
-};
+  )
+}
 
-export default Details;
+export default Details

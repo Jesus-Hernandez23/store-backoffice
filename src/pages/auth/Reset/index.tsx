@@ -1,22 +1,22 @@
-import React from 'react';
+import React from 'react'
 
 //control
-import { useForm, FormProvider } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useForm, FormProvider } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import CardContent from '@mui/material/CardContent';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
+import CardContent from '@mui/material/CardContent'
+import LoadingButton from '@mui/lab/LoadingButton'
+import Typography from '@mui/material/Typography'
 
 //Owned
-import apiAuth from '@/api/tasks/ApiIdentity';
-import { Input } from '@/shareds/control';
+import apiAuth from '@/api-deprecated/tasks/ApiIdentity'
+import { Input } from '@/shareds/control'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,14 +24,14 @@ const validationSchema = Yup.object().shape({
     .min(6, 'El correo debe tener al menos 6 caracteres')
     .max(50, 'El correo no debe exceder los 50 caracteres')
     .email('El correo es invalido'),
-});
+})
 
 const Register = () => {
-  const { isLoading, mutate } = apiAuth.Register();
+  const { isLoading, mutate } = apiAuth.Register()
   //control form
   const methods = useForm({
     resolver: yupResolver(validationSchema),
-  });
+  })
 
   const enviarForm = (data) => {
     /* mutate(data, {
@@ -39,7 +39,7 @@ const Register = () => {
                 methods.reset();
             },
         });*/
-  };
+  }
 
   return (
     <Box width={350}>
@@ -70,7 +70,7 @@ const Register = () => {
         </CardContent>
       </Card>
     </Box>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
-import Select from 'react-select';
-import { useTranslation } from 'react-i18next';
+import Select from 'react-select'
+import { useTranslation } from 'react-i18next'
 
-import { styled } from '@mui/system';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
+import { styled } from '@mui/system'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import Slider from '@mui/material/Slider'
 
 //Icon
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import SummarizeIcon from '@mui/icons-material/AccessibilityNewTwoTone';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+import SummarizeIcon from '@mui/icons-material/AccessibilityNewTwoTone'
 
 //owned
-import PageCard from '@/shareds/PageCard';
+import PageCard from '@/shareds/PageCard'
 
 //redux
-import { setLocale, setDarkMode, setDyslexic, setFontSize } from '@/store/features/appSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import { setLocale, setDarkMode, setDyslexic, setFontSize } from '@/redux/features/appSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
 const ReportBox = styled(Stack)(({ theme }) => ({
   paddingTop: '1rem',
@@ -34,7 +34,7 @@ const ReportBox = styled(Stack)(({ theme }) => ({
     transform: 'translate(0, -6px)',
     boxShadow: '0 0.25rem 0.25rem rgb(0 0 0 / 10%) !important',
   },
-}));
+}))
 
 const optionLanguage = [
   {
@@ -45,32 +45,32 @@ const optionLanguage = [
     label: 'Español',
     value: 'es',
   },
-];
+]
 
 const Accessibility = () => {
   //redux
-  const dispatch = useAppDispatch();
-  const setting = useAppSelector((state) => state.app.setting);
+  const dispatch = useAppDispatch()
+  const setting = useAppSelector((state) => state.app.setting)
 
   //language
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation()
 
   const handleDyslexic = () => {
-    dispatch(setDyslexic(!setting.dyslexic));
-  };
+    dispatch(setDyslexic(!setting.dyslexic))
+  }
 
   const handleDarkMode = () => {
-    dispatch(setDarkMode(!setting.darkMode));
-  };
+    dispatch(setDarkMode(!setting.darkMode))
+  }
 
   const handleFontSize = ({ target }) => {
-    dispatch(setFontSize(target.value));
-  };
+    dispatch(setFontSize(target.value))
+  }
 
   const handleLanguage = (current) => {
-    dispatch(setLocale(current));
-    i18n.changeLanguage(current.value);
-  };
+    dispatch(setLocale(current))
+    i18n.changeLanguage(current.value)
+  }
 
   return (
     <PageCard
@@ -146,7 +146,7 @@ const Accessibility = () => {
         </Grid>
       </Grid>
     </PageCard>
-  );
-};
+  )
+}
 
-export default Accessibility;
+export default Accessibility

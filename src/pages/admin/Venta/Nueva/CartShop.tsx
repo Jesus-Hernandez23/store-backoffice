@@ -1,41 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 //controls
-import { show } from '@ebay/nice-modal-react';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { show } from '@ebay/nice-modal-react'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 //mui
-import { styled } from '@mui/system';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Typography from '@mui/material/Typography';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import { styled } from '@mui/system'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import Typography from '@mui/material/Typography'
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 
 //icons
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import HourglassTopIcon from '@mui/icons-material/HourglassTop'
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt'
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined'
 
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined'
 
 //own
-import NewNote from './NewNote';
-import SelectUser from './SelectUser';
-import SelectedItem from './SelectedItem';
-import NoData from '@/pages/error/NoData';
-import FormPayment from '@/components/forms/FormPayment';
+import NewNote from './NewNote'
+import SelectUser from './SelectUser'
+import SelectedItem from './SelectedItem'
+import NoData from '@/pages/error/NoData'
+import FormPayment from '@/components/forms/FormPayment'
 
 //redux
-import { editItem, removeItem, nukeCart } from '@/store/features/shopSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import { editItem, removeItem, nukeCart } from '@/redux/features/cartSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
 const CustonSpan = styled('span')({
   padding: 0,
@@ -47,21 +47,21 @@ const CustonSpan = styled('span')({
   textDecoration: 'none',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-});
+})
 
 const fnActions = ({ id }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   return [
     <GridActionsCellItem
       icon={<DeleteIcon />}
       label='Delete'
       onClick={() => {
-        dispatch(removeItem({ id }));
+        dispatch(removeItem({ id }))
       }}
     />,
-  ];
-};
+  ]
+}
 
 const columns = [
   { field: 'name', headerName: 'Producto', flex: 1, renderCell: SelectedItem },
@@ -74,22 +74,22 @@ const columns = [
     preProcessEditCellProps: (params) => ({ ...params.props, error: parseInt(params.props.value) < 1 }),
   },
   { field: 'acciones', type: 'actions', headerName: 'Acciones', width: 100, getActions: fnActions },
-];
+]
 
 const Selecionado = ({ vendorId }) => {
-  const [note, setNote] = useState('');
-  const [client, setClient] = useState({});
+  const [note, setNote] = useState('')
+  const [client, setClient] = useState({})
 
   //redux
-  const dispatch = useAppDispatch();
-  const cart = useAppSelector((state) => state.cart.cart);
-  const total = cart.reduce((prev, current) => prev + current.price * current.quantity, 0);
+  const dispatch = useAppDispatch()
+  const cart = useAppSelector((state) => state.cart.cart)
+  const total = cart.reduce((prev, current) => prev + current.price * current.quantity, 0)
 
   //show Payment Dialog
   const handlePayment = async () => {
     if (Object.values(cart).length < 1) {
-      alert('Debe haber al menos un producto');
-      return;
+      alert('Debe haber al menos un producto')
+      return
     }
 
     show(FormPayment, {
@@ -98,13 +98,13 @@ const Selecionado = ({ vendorId }) => {
       note,
       total,
       totalItems: cart?.length || 0,
-    });
-  };
+    })
+  }
 
   //handle with edit quantity of item
   const handleEdit = ({ id, value: quantity }) => {
-    dispatch(editItem({ id, quantity }));
-  };
+    dispatch(editItem({ id, quantity }))
+  }
 
   //delete all selected item
   const handleCancel = () => {
@@ -120,17 +120,17 @@ const Selecionado = ({ vendorId }) => {
       reverseButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        setNote('');
-        setClient({});
-        dispatch(nukeCart());
+        setNote('')
+        setClient({})
+        dispatch(nukeCart())
       }
-    });
-  };
+    })
+  }
 
   //add order in waiting list
   const handleWait = () => {
     //alert(JSON.stringify(structData()));
-  };
+  }
 
   return (
     <Box height='100%'>
@@ -229,7 +229,7 @@ const Selecionado = ({ vendorId }) => {
         </div>
       </CardActions>
     </Box>
-  );
-};
+  )
+}
 
-export default Selecionado;
+export default Selecionado

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
-import { styled } from '@mui/system';
-import { useTranslation } from 'react-i18next';
-import { useMediaQuery, Box, Tooltip, TextField, MenuItem, InputAdornment, Hidden, Button } from '@mui/material';
+import { styled } from '@mui/system'
+import { useTranslation } from 'react-i18next'
+import { useMediaQuery, Box, Tooltip, TextField, MenuItem, InputAdornment, Hidden, Button } from '@mui/material'
 
-import TranslateIcon from '@mui/icons-material/Translate';
-import BrightnessIcon from '@mui/icons-material/Brightness6Outlined';
+import TranslateIcon from '@mui/icons-material/Translate'
+import BrightnessIcon from '@mui/icons-material/Brightness6Outlined'
 
 //redux
-import { setLocale, setDarkMode } from '@/store/features/appSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import { setLocale, setDarkMode } from '@/redux/features/appSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
 const currencies = [
   {
@@ -20,34 +20,34 @@ const currencies = [
     value: 'es',
     label: 'Español',
   },
-];
+]
 
 const MenuIcon = styled(BrightnessIcon)({
   flexGrow: 1,
   fontSize: '1.5rem',
-});
+})
 
 const SelectIcon = styled(InputAdornment)({
   marginRight: '4px',
   color: '#fff',
-});
+})
 
 const Customization = () => {
   //redux
-  const dispatch = useAppDispatch();
-  const setting = useAppSelector((state) => state.app.setting);
+  const dispatch = useAppDispatch()
+  const setting = useAppSelector((state) => state.app.setting)
 
-  const { i18n } = useTranslation();
-  const matchDownSm = useMediaQuery('(max-width:600px)');
+  const { i18n } = useTranslation()
+  const matchDownSm = useMediaQuery('(max-width:600px)')
 
   const handleLanguage = ({ target }) => {
-    dispatch(setLocale({ value: target.value, label: 'Hi' }));
-    i18n.changeLanguage(target.value);
-  };
+    dispatch(setLocale({ value: target.value, label: 'Hi' }))
+    i18n.changeLanguage(target.value)
+  }
 
   const handleDarkMode = () => {
-    dispatch(setDarkMode(!setting.darkMode));
-  };
+    dispatch(setDarkMode(!setting.darkMode))
+  }
 
   return (
     <React.Fragment>
@@ -86,7 +86,7 @@ const Customization = () => {
         </Button>
       </Tooltip>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Customization;
+export default Customization

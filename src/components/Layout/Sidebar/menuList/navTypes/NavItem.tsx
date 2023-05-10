@@ -1,20 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
-import { styled } from '@mui/system';
-import { Avatar, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { styled } from '@mui/system'
+import { Avatar, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
 
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Chip from '@/components/UI/Chip';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import Chip from '@/components/Chip'
 
 //redux
-import { setOpen } from '@/store/features/appSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook';
+import { setOpen } from '@/redux/features/appSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux.hook'
 
 const SubMenuCaption = styled(Typography)(({ theme }) => ({
   ...theme.typography.subMenuCaption,
-}));
+}))
 
 const styles = {
   listIcon: {
@@ -35,31 +35,31 @@ const styles = {
     backgroundColor: '#ffcdd2',
     marginRight: '20px',
   },
-};
+}
 
 const NavItem = (props) => {
-  const { item, level } = props;
-  const { t } = useTranslation();
+  const { item, level } = props
+  const { t } = useTranslation()
 
   //redux
-  const dispatch = useAppDispatch();
-  const isOpen = useAppSelector((state) => state.app.setting.isOpen);
+  const dispatch = useAppDispatch()
+  const isOpen = useAppSelector((state) => state.app.setting.isOpen)
 
-  const Icon = item.icon;
-  const fontSize = level > 0 ? 'inherit' : 'default';
+  const Icon = item.icon
+  const fontSize = level > 0 ? 'inherit' : 'default'
 
-  const itemIcon = item.icon ? <Icon color='inherit' /> : <ArrowForwardIcon color='inherit' sx={{ fontSize }} />;
+  const itemIcon = item.icon ? <Icon color='inherit' /> : <ArrowForwardIcon color='inherit' sx={{ fontSize }} />
 
-  let itemIconClass = !item.icon ? styles.listIcon : styles.menuIcon;
+  let itemIconClass = !item.icon ? styles.listIcon : styles.menuIcon
 
-  let itemTarget = '';
+  let itemTarget = ''
   if (item.target) {
-    itemTarget = '_blank';
+    itemTarget = '_blank'
   }
 
-  let listItemProps = { component: Link, to: item.url };
+  let listItemProps = { component: Link, to: item.url }
   if (item.external) {
-    listItemProps = { component: 'a', href: item.url };
+    listItemProps = { component: 'a', href: item.url }
   }
 
   return (
@@ -100,7 +100,7 @@ const NavItem = (props) => {
         />
       )}
     </ListItem>
-  );
-};
+  )
+}
 
-export default NavItem;
+export default NavItem

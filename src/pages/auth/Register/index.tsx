@@ -1,39 +1,39 @@
-import React from 'react';
+import React from 'react'
 
 //control
-import { useNavigate } from 'react-router-dom';
-import { useForm, FormProvider } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom'
+import { useForm, FormProvider } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
 //mui
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import LoadingButton from '@mui/lab/LoadingButton';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import Button from '@mui/material/Button';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
+import Stack from '@mui/material/Stack'
+import Divider from '@mui/material/Divider'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import LoadingButton from '@mui/lab/LoadingButton'
+import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
+import Stepper from '@mui/material/Stepper'
+import Step from '@mui/material/Step'
+import StepLabel from '@mui/material/StepLabel'
+import StepContent from '@mui/material/StepContent'
+import Button from '@mui/material/Button'
 
 //icon
-import MailIcon from '@mui/icons-material/MailTwoTone';
-import LockIcon from '@mui/icons-material/LockTwoTone';
-import BadgeIcon from '@mui/icons-material/BadgeTwoTone';
-import ContactsIcon from '@mui/icons-material/ContactPageTwoTone';
-import AccountIcon from '@mui/icons-material/AccountCircleTwoTone';
+import MailIcon from '@mui/icons-material/MailTwoTone'
+import LockIcon from '@mui/icons-material/LockTwoTone'
+import BadgeIcon from '@mui/icons-material/BadgeTwoTone'
+import ContactsIcon from '@mui/icons-material/ContactPageTwoTone'
+import AccountIcon from '@mui/icons-material/AccountCircleTwoTone'
 
 //Owned
-import apiAuth from '@/api/tasks/ApiIdentity';
-import { Input, Password, CheckBox, Phone } from '@/shareds/control';
+import apiAuth from '@/api-deprecated/tasks/ApiIdentity'
+import { Input, Password, CheckBox, Phone } from '@/shareds/control'
 
 const CustomizedCardHeader = styled(CardHeader)`
   flex-direction: row-reverse;
@@ -44,7 +44,7 @@ const CustomizedCardHeader = styled(CardHeader)`
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
   }
-`;
+`
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -71,39 +71,39 @@ const validationSchema = Yup.object().shape({
       /^.*(?=.{8,16})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
       'La contraseña debe tener al menos una mayuscula, un numero y un caracter especial (!?$*.).',
     ),
-});
+})
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { isLoading, mutate } = apiAuth.Register();
+  const navigate = useNavigate()
+  const { isLoading, mutate } = apiAuth.Register()
   //control form
   const methods = useForm({
     resolver: yupResolver(validationSchema),
-  });
+  })
 
   const enviarForm = (data) => {
-    console.log(data);
+    console.log(data)
     mutate(data, {
       onSuccess: ({ data }) => {
-        methods.reset();
-        navigate('/');
+        methods.reset()
+        navigate('/')
       },
-    });
-  };
+    })
+  }
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(0)
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+  }
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+  }
 
   const handleReset = () => {
-    setActiveStep(0);
-  };
+    setActiveStep(0)
+  }
 
   return (
     <Box width={500}>
@@ -219,7 +219,7 @@ const Register = () => {
         </CardContent>
       </Card>
     </Box>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

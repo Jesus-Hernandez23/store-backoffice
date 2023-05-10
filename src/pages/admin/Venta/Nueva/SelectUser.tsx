@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 
-import Select from 'react-select';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+import Select from 'react-select'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Avatar from '@mui/material/Avatar'
 
-import Dialog from '@/shareds/Dialog';
-import { apiUser } from '../../../../api/tasks';
+import Dialog from '@/shareds/Dialog'
+import { apiUser } from '@/api-deprecated/tasks'
 
 const SelectUser = NiceModal.create(({ client, setClient }) => {
   //modal handle
-  const modal = useModal();
-  const { data } = apiUser.get(1, 30);
-  const [options, setOptions] = useState([]);
-  const [auxClient, setAuxClient] = useState({});
+  const modal = useModal()
+  const { data } = apiUser.get(1, 30)
+  const [options, setOptions] = useState([])
+  const [auxClient, setAuxClient] = useState({})
 
   useEffect(() => {
     setOptions(
       data?.data?.map(({ id, firstName, lastName, image }) => {
-        return { value: id, label: `${firstName} ${lastName}`, image };
+        return { value: id, label: `${firstName} ${lastName}`, image }
       }),
-    );
-  }, [data]);
+    )
+  }, [data])
 
   const handleOk = () => {
-    setClient(auxClient);
-    modal.hide();
-  };
+    setClient(auxClient)
+    modal.hide()
+  }
 
   const handleCancel = () => {
-    setAuxClient({});
-    modal.hide();
-  };
+    setAuxClient({})
+    modal.hide()
+  }
 
   useEffect(() => {
     if (client !== auxClient) {
-      setAuxClient(client);
+      setAuxClient(client)
     }
-  }, [client]);
+  }, [client])
 
-  console.log(auxClient);
+  console.log(auxClient)
   return (
     <Dialog
       title='Seleccionar usuario'
@@ -76,7 +76,7 @@ const SelectUser = NiceModal.create(({ client, setClient }) => {
         </Box>
       </Box>
     </Dialog>
-  );
-});
+  )
+})
 
-export default SelectUser;
+export default SelectUser

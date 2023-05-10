@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
 //control
-import { useForm } from 'react-hook-form';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import Stack from '@mui/material/Stack';
+import { useForm } from 'react-hook-form'
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import Stack from '@mui/material/Stack'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import api from '@/api/tasks/ApiBrand';
-import { Input, CheckBox, TextArea } from '@/shareds/control';
+import FormDialog from '@/shareds/FormDialog'
+import api from '@/api-deprecated/tasks/ApiBrand'
+import { Input, CheckBox, TextArea } from '@/shareds/control'
 
 //nombre imagen icono descripcion porDefecto
 const validationSchema = Yup.object().shape({
@@ -23,29 +23,29 @@ const validationSchema = Yup.object().shape({
     .min(3, 'La descripcion debe tener al menos 3 caracteres')
     .max(90, 'La descripcion no debe exceder los 90 caracteres'),
   //id: Yup.number('Id debe ser de tipo entero').notRequired(),
-});
+})
 
 const FormBrand = NiceModal.create(({ data, request, title }) => {
   //modal handle
-  const modal = useModal();
+  const modal = useModal()
 
   //validator
   const methods = useForm({
     shouldUnregister: true,
     resolver: yupResolver(validationSchema),
-  });
+  })
 
   //Apis
-  const { mutate } = request;
+  const { mutate } = request
 
   const onSubmit = (data) => {
     mutate(data, {
       onSuccess: () => {
-        methods.reset({});
-        modal.hide();
+        methods.reset({})
+        modal.hide()
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     const defaultValues = {
@@ -53,9 +53,9 @@ const FormBrand = NiceModal.create(({ data, request, title }) => {
       name: data?.name || '',
       description: data?.description || '',
       byDefault: data?.byDefault || false,
-    };
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    methods.reset(defaultValues)
+  }, [data])
 
   return (
     <FormDialog
@@ -77,7 +77,7 @@ const FormBrand = NiceModal.create(({ data, request, title }) => {
       </Stack>
       <Input label='Codigo' name='id' type='hidden' disabled />
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormBrand;
+export default FormBrand

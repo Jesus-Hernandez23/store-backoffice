@@ -1,27 +1,27 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 //controls
-import { Button } from '@mui/material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { Button } from '@mui/material'
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 
 //Icons
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import InventoryIcon from '@mui/icons-material/InventoryTwoTone';
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
+import InventoryIcon from '@mui/icons-material/InventoryTwoTone'
 
 //owned
-import PageCard from '@/shareds/PageCard';
-import Toolbar from '@/components/Toolbar';
-import Form from '@/components/forms/FormInventory/FormInventory';
-import api from '@/api/tasks/ApiInventory';
-import usePagination from '@/services/hooks/usePagination';
-import DropButton, { MenuItem } from '@/components/DropButton';
-import useCrud from '@/services/hooks/useCrud';
+import PageCard from '@/shareds/PageCard'
+import Toolbar from '@/components/Toolbar'
+import Form from '@/components/forms/FormInventory/FormInventory'
+import api from '@/api-deprecated/tasks/ApiInventory'
+import usePagination from '@/services/hooks/usePagination'
+import DropButton, { MenuItem } from '@/components/DropButton'
+import useCrud from '@/services/hooks/useCrud'
 
-const URL = import.meta.env.VITE_API_REPORT_URL;
+const URL = import.meta.env.VITE_API_REPORT_URL
 
 const columns = [
   { field: 'id', headerName: 'Codigo', width: 100 },
@@ -34,25 +34,25 @@ const columns = [
   { field: 'subTotal', headerName: 'Sub Total', width: 100 },
   { field: 'total', headerName: 'Total', width: 100 },
   { field: 'note', headerName: 'Nota', width: 100 },
-];
+]
 
 const Inventario = () => {
-  const { t } = useTranslation();
-  const { control, data, selected, isLoading, isError } = usePagination(api, columns);
-  const { handleAdd, handleEdit, handleDelete } = useCrud(api, Form, selected);
+  const { t } = useTranslation()
+  const { control, data, selected, isLoading, isError } = usePagination(api, columns)
+  const { handleAdd, handleEdit, handleDelete } = useCrud(api, Form, selected)
 
   const onClickExpiring = () =>
     window
       .open(URL + '/3e8f9414-ef6d-4b47-9896-6b12a527be1b/Reportes/Productos%20a%20Vencer?showmyreports=1', '_blank')
-      .focus();
+      .focus()
   const onClickExpired = () =>
     window
       .open(URL + '/f775b04a-6901-464a-be29-efd91a2695aa/Reportes/Productos%20Vencidos?showmyreports=1', '_blank')
-      .focus();
+      .focus()
 
-  const handleChooser = () => {};
+  const handleChooser = () => {}
 
-  const handlePrint = () => {};
+  const handlePrint = () => {}
 
   return (
     <PageCard
@@ -96,7 +96,7 @@ const Inventario = () => {
 
       <DataGrid {...control} />
     </PageCard>
-  );
-};
+  )
+}
 
-export default Inventario;
+export default Inventario

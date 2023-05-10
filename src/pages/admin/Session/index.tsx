@@ -1,24 +1,24 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 //controls
-import { Button } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 
 //Icons
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import MonitorIcon from '@mui/icons-material/MonitorTwoTone';
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
+import MonitorIcon from '@mui/icons-material/MonitorTwoTone'
 
 //owned
-import PageCard from '@/shareds/PageCard';
-import Toolbar from '@/components/Toolbar';
-import usePagination from '@/services/hooks/usePagination';
-import DropButton, { MenuItem } from '@/components/DropButton';
-import { apiSession } from '../../../api/tasks';
+import PageCard from '@/shareds/PageCard'
+import Toolbar from '@/components/Toolbar'
+import usePagination from '@/services/hooks/usePagination'
+import DropButton, { MenuItem } from '@/components/DropButton'
+import { apiSession } from '@/api-deprecated/tasks'
 
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_URL
 
 /*
 id: "abd43e99-b381-4e83-884c-4da3fb8b13a3"
@@ -40,16 +40,16 @@ const columns = [
   { field: 'LogoutAt', headerName: 'Finalizado', type: 'dateTime', width: 150 },
   { field: 'balance', headerName: 'Balance', width: 100 },
   { field: 'finalBalance', headerName: 'Balance Final', width: 100 },
-];
+]
 
 const Session = () => {
-  const { t } = useTranslation();
-  const { control, isLoading, isError } = usePagination(apiSession, columns);
+  const { t } = useTranslation()
+  const { control, isLoading, isError } = usePagination(apiSession, columns)
 
-  const onClickExpiring = () => window.open(URL + '/api/reporte/productos/vence', '_blank').focus();
-  const onClickExpired = () => window.open(URL + '/api/reporte/productos/vencido', '_blank').focus();
-  const handleChooser = () => {};
-  const handlePrint = () => {};
+  const onClickExpiring = () => window.open(URL + '/api/reporte/productos/vence', '_blank').focus()
+  const onClickExpired = () => window.open(URL + '/api/reporte/productos/vencido', '_blank').focus()
+  const handleChooser = () => {}
+  const handlePrint = () => {}
 
   return (
     <PageCard
@@ -93,7 +93,7 @@ const Session = () => {
 
       <DataGrid {...control} />
     </PageCard>
-  );
-};
+  )
+}
 
-export default Session;
+export default Session

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 //control
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import NiceModal, { useModal } from '@ebay/nice-modal-react'
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
 
 //Owned
-import FormDialog from '@/shareds/FormDialog';
-import apiUser, { getRole } from '@/api/tasks/ApiUser';
-import { Input, Select, Uploader, Password, Phone } from '@/shareds/control';
+import FormDialog from '@/shareds/FormDialog'
+import apiUser, { getRole } from '@/api-deprecated/tasks/ApiUser'
+import { Input, Select, Uploader, Password, Phone } from '@/shareds/control'
 
 const userSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -41,22 +41,22 @@ const userSchema = Yup.object().shape({
       'La contraseña debe tener al menos 8 y maximo 16 caracteres, al menos una mayuscula, al menos un numero y al menos un caracter especial (!?$*.).',
     ),
   // roles: Yup.array().test('len', 'Debe asignarle al menos un rol al usuario', (val) => val?.length >= 1),
-});
+})
 
 const FormEmployee = NiceModal.create(({ data, request, title }) => {
   //modal handle
-  const modal = useModal();
+  const modal = useModal()
 
   //validator
   const methods = useForm({
     shouldUnregister: true,
     resolver: yupResolver(userSchema),
-  });
+  })
 
-  const [options, setOptions] = useState([]);
-  const [currentSrc, setCurrentSrc] = useState('');
-  const { mutate } = request;
-  const { isLoading: gettingRole, data: dataRole } = getRole(1, 100);
+  const [options, setOptions] = useState([])
+  const [currentSrc, setCurrentSrc] = useState('')
+  const { mutate } = request
+  const { isLoading: gettingRole, data: dataRole } = getRole(1, 100)
 
   const onSubmit = async (data) => {
     mutate(data, {
@@ -69,21 +69,21 @@ const FormEmployee = NiceModal.create(({ data, request, title }) => {
           email: '',
           password: '',
           roles: [],
-        });
-        modal.hide();
+        })
+        modal.hide()
       },
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (dataRole?.data) {
       const options = dataRole?.data.map(({ id, name }) => ({
         value: id,
         label: name,
-      }));
-      setOptions(options);
+      }))
+      setOptions(options)
     }
-  }, [dataRole]);
+  }, [dataRole])
 
   //reset inputs when data change
   useEffect(() => {
@@ -96,10 +96,10 @@ const FormEmployee = NiceModal.create(({ data, request, title }) => {
       email: data?.email || '',
       password: data?.password || '',
       roles: data?.roles || [],
-    };
-    setCurrentSrc(data?.image || '');
-    methods.reset(defaultValues);
-  }, [data]);
+    }
+    setCurrentSrc(data?.image || '')
+    methods.reset(defaultValues)
+  }, [data])
 
   return (
     <FormDialog title={`${title} usuario`} methods={methods} callback={methods.handleSubmit(onSubmit)} modal={modal}>
@@ -139,7 +139,7 @@ const FormEmployee = NiceModal.create(({ data, request, title }) => {
         </Grid>
       </Grid>
     </FormDialog>
-  );
-});
+  )
+})
 
-export default FormEmployee;
+export default FormEmployee

@@ -1,5 +1,5 @@
 import React from 'react'
-import { apiOrder } from '@/api/tasks'
+import { apiOrder } from '@/api-deprecated/tasks'
 
 //redux
 import { nukeCart } from '@/redux/features/cartSlice'
